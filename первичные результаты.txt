@@ -1,0 +1,17 @@
+—реднее отклонение показател€ датчика C от за€вленного целевого значени€ (тест с газами):  
+mean of error at 0 ppm: -112.41089721551731
+mean of error at 498 ppm: -334.8243248292685
+mean of error at 2540 ppm: -351.25698866666664
+mean of error at 20500 ppm: -971.6312071164377
+mean of error at 31000 ppm: -1978.7030361428572
+mean of error at 50000 ppm: -185.72694040000061
+
+ орень из среднеквадратичной ошибки показаний датчика C и расчитанного регрессионной нейросетью значени€ C 
+по показател€м (Um,Ud,Ur) по отношению к за€вленному целевому значению C на тестовой выборке в 611 элементов 
+из датасета (тест с газами), по процентным интервалам:
+0.0%:  root mean squared error original C 160.94261693667576 and  evaluated 151.83371158231654 
+0.0498%:  root mean squared error original C 353.1492965235516 and  evaluated 242.3846824502347 
+0.254%:  root mean squared error original C 405.38832347958515 and  evaluated 414.5380056910086 
+2.05%:  root mean squared error original C 1019.6896464392751 and  evaluated 352.6730655069527 
+3.1%:  root mean squared error original C 2039.6029357394177 and  evaluated 317.25248320575105 
+5.0%:  root mean squared error original C 977.6768830835177 and  evaluated 503.08359546355496
