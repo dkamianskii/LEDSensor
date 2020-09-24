@@ -1,0 +1,135 @@
+rmse on gas
+[(264.1432121145428, 'two layer model nn 1 = 18, nn 2 = 18 temp_gas'), (284.2737319855673, 'two layer model nn 1 = 18, nn 2 = 30 stitch_big'), (310.4072025109469, 'one layer model nn = 16 gases_and_temp'), (326.42682049744894, 'two layer model nn 1 = 18, nn 2 = 18 stitch_small'), (367.5799168465387, 'two layer model nn 1 = 18, nn 2 = 30 gases_and_temp'), (411.8987486602846, 'one layer model nn = 20 gases_only'), (415.9594841667583, 'two layer model nn 1 = 24, nn 2 = 30 gases_only'), (467.3763577250359, 'one layer model nn = 24 stitch_big'), (516.1446659820036, 'one layer model nn = 8 temp_gas'), (531.027894198242, 'one layer model nn = 16 stitch_small')]
+rmse on temp
+[(2.06459641456604, 'two layer model nn 1 = 18, nn 2 = 30 gases_and_temp'), (4.595085144042969, 'two layer model nn 1 = 18, nn 2 = 30 stitch_big'), (5.399962425231934, 'two layer model nn 1 = 24, nn 2 = 30 gases_only'), (6.044947147369385, 'two layer model nn 1 = 18, nn 2 = 18 stitch_small'), (59.76664469257692, 'one layer model nn = 16 gases_and_temp'), (81.51883138969166, 'one layer model nn = 8 temp_gas'), (157.08196422048397, 'two layer model nn 1 = 18, nn 2 = 18 temp_gas'), (21859.16938717265, 'one layer model nn = 24 stitch_big'), (161672.79564637845, 'one layer model nn = 16 stitch_small'), (175815.8468883347, 'one layer model nn = 20 gases_only')]
+
+test on gases
+results of one layer model nn = 20 gases_only
+0.0%:  root mean squared error original C 294.4 and  evaluated 432.8 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 101.1 
+0.254%:  root mean squared error original C 427.09 and  evaluated 460.0 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 164.8 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 469.7 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 843.1 
+
+
+results of two layer model nn 1 = 24, nn 2 = 30 gases_only
+0.0%:  root mean squared error original C 294.4 and  evaluated 271.1 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 139.6 
+0.254%:  root mean squared error original C 427.09 and  evaluated 616.5 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 158.1 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 475.9 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 834.6 
+
+
+results of one layer model nn = 16 stitch_small
+0.0%:  root mean squared error original C 294.4 and  evaluated 304.8 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 305.9 
+0.254%:  root mean squared error original C 427.09 and  evaluated 552.8 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 326.2 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 751.0 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 945.4 
+
+
+results of two layer model nn 1 = 18, nn 2 = 18 stitch_small
+0.0%:  root mean squared error original C 294.4 and  evaluated 293.1 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 235.9 
+0.254%:  root mean squared error original C 427.09 and  evaluated 435.2 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 241.2 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 351.0 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 402.2 
+
+
+results of one layer model nn = 24 stitch_big
+0.0%:  root mean squared error original C 294.4 and  evaluated 318.7 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 154.8 
+0.254%:  root mean squared error original C 427.09 and  evaluated 569.6 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 325.6 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 630.7 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 804.7 
+
+
+results of two layer model nn 1 = 18, nn 2 = 30 stitch_big
+0.0%:  root mean squared error original C 294.4 and  evaluated 237.8 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 100.8 
+0.254%:  root mean squared error original C 427.09 and  evaluated 337.1 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 199.4 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 477.0 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 353.6 
+
+
+results of one layer model nn = 16 gases_and_temp
+0.0%:  root mean squared error original C 294.4 and  evaluated 320.6 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 230.6 
+0.254%:  root mean squared error original C 427.09 and  evaluated 452.1 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 174.3 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 493.6 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 191.4 
+
+
+results of two layer model nn 1 = 18, nn 2 = 30 gases_and_temp
+0.0%:  root mean squared error original C 294.4 and  evaluated 368.4 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 211.3 
+0.254%:  root mean squared error original C 427.09 and  evaluated 364.5 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 270.6 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 678.9 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 311.8 
+
+
+results of one layer model nn = 8 temp_gas
+0.0%:  root mean squared error original C 294.4 and  evaluated 453.5 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 116.4 
+0.254%:  root mean squared error original C 427.09 and  evaluated 528.3 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 210.2 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 822.8 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 965.6 
+
+
+results of two layer model nn 1 = 18, nn 2 = 18 temp_gas
+0.0%:  root mean squared error original C 294.4 and  evaluated 286.3 
+0.0498%:  root mean squared error original C 338.34 and  evaluated 110.5 
+0.254%:  root mean squared error original C 427.09 and  evaluated 404.0 
+2.05%:  root mean squared error original C 1101.1 and  evaluated 164.4 
+3.1%:  root mean squared error original C 2091.8 and  evaluated 419.9 
+5.0%:  root mean squared error original C 1268.3 and  evaluated 199.7 
+
+
+test on temperature
+results of one layer model nn = 20 gases_only
+0.0%:  root mean squared error original C 21.357 and  evaluated 1.758e+05 
+
+
+results of two layer model nn 1 = 24, nn 2 = 30 gases_only
+0.0%:  root mean squared error original C 21.357 and  evaluated 5.4 
+
+
+results of one layer model nn = 16 stitch_small
+0.0%:  root mean squared error original C 21.357 and  evaluated 1.617e+05 
+
+
+results of two layer model nn 1 = 18, nn 2 = 18 stitch_small
+0.0%:  root mean squared error original C 21.357 and  evaluated 6.045 
+
+
+results of one layer model nn = 24 stitch_big
+0.0%:  root mean squared error original C 21.357 and  evaluated 2.186e+04 
+
+
+results of two layer model nn 1 = 18, nn 2 = 30 stitch_big
+0.0%:  root mean squared error original C 21.357 and  evaluated 4.595 
+
+
+results of one layer model nn = 16 gases_and_temp
+0.0%:  root mean squared error original C 21.357 and  evaluated 59.77 
+
+
+results of two layer model nn 1 = 18, nn 2 = 30 gases_and_temp
+0.0%:  root mean squared error original C 21.357 and  evaluated 2.065 
+
+
+results of one layer model nn = 8 temp_gas
+0.0%:  root mean squared error original C 21.357 and  evaluated 81.52 
+
+
+results of two layer model nn 1 = 18, nn 2 = 18 temp_gas
+0.0%:  root mean squared error original C 21.357 and  evaluated 157.1

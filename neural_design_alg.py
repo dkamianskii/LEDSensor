@@ -11,6 +11,9 @@ import tensorflow as tf
 from tensorflow import keras
 import pandas as pd
 #%%
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+#%%
 """
 Sampling different train/test datasets
 """
@@ -75,7 +78,7 @@ from sklearn.model_selection import train_test_split
 from sklearn import preprocessing
 
 def nn_pipeline(df):
-    features = df[['Um','Ur','Ud']]
+    features = df[['Um','Ur','Ud']].copy()
     target = df['C_target']
     features = set_nonelinear_features(features)
     features_train, features_val, target_train, target_val = train_test_split(features, target,
@@ -89,7 +92,32 @@ def nn_pipeline(df):
     
     print(features_train.shape)
     
-    return optimal_network(features_train, features_val, target_train, target_val)
+    return scaler
+    #return optimal_network(features_train, features_val, target_train, target_val)
+#%%
+"""
+Testing script
+"""
+from sklearn.metrics import mean_squared_error
+
+def test_model(df_test, model, scaler):
+    C_target_test = df_test['C_target']
+    print(f"results of {model['name']}")
+    rmse_on_perc = []
+    for target in sorted(set(C_target_test)):
+        temp_test = df_test[df_test['C_target'] == target]
+        C_original = temp_test['C']
+        C_target = temp_test['C_target']
+        temp_features = temp_test[['Um','Ur','Ud']].copy()
+        temp_features = set_nonelinear_features(temp_features)
+        temp_features = scaler.transform(temp_features)
+        temp_predict = model['model'].predict(temp_features,verbose=0)
+        temp_rmse = np.sqrt(mean_squared_error(temp_predict, C_target))
+        rmse_on_perc.append(temp_rmse)
+        print(f"{target*1e-4:.5}%:  root mean squared error original C {np.sqrt(mean_squared_error(C_original, C_target)):.5} and  evaluated {temp_rmse:.4} ")
+    
+    mean_rmse = np.array(rmse_on_perc).mean()
+    return mean_rmse
 #%%
 from keras.models import Sequential
 from keras.layers import BatchNormalization
@@ -176,30 +204,106 @@ best_two_l_model_gasses_only.save("best_two_l_model_gasses_only")
 
 best_one_l_model_gasses_and_stitch_small, best_two_l_model_gasses_and_stitch_small = nn_pipeline(df_gasses_and_stitch_small)
 best_one_l_model_gasses_and_stitch_big, best_two_l_model_gasses_and_stitch_big = nn_pipeline(df_gasses_and_stitch_big)
+#%%
 best_one_l_model_gasses_and_temp, best_two_l_model_gasses_and_temp = nn_pipeline(df_gases_and_temp)
 best_one_l_model_gasses_and_temp_gas, best_two_l_model_gasses_and_temp_gas = nn_pipeline(df_gases_and_temp_gas)
-
 
 #%%
 from matplotlib import  pyplot as plt
 
-color_map =['red','blue','purple', 'green', 'black', 'yellow','brown', 'grey', 'orange','plum' , 'khaki', 'indigo']
-def plot_history(models, xlim):    
+color_map =['black','red','blue','purple', 'green', 'black', 'yellow','brown', 'grey', 'orange','plum' , 'khaki', 'indigo']
+def plot_history(models, xlim, linewidth):    
     plt.figure(figsize=(40,20))
     i = 0
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+    plt.xlabel('Epoch',fontsize=20)
+    plt.ylabel('Mean Square Error [$MPG^2$]',fontsize=20)
     for model in models:
         model_name = model['name']
-        hist = model.history
-        epoch = hist.epoch
-        plt.xlabel('Epoch')
-        plt.ylabel('Mean Square Error [$MPG^2$]')
+        hist = model['history'].history
+        epoch = model['history'].epoch
         plt.plot(epoch, hist['mse'], ms=1.5, color=color_map[i],
-           label=f'{model_name} train')
+           label=f'{model_name} train', linewidth=linewidth)
         plt.plot(epoch, hist['val_mse'], color=color_map[i],
-           label = f'{model_name} val', ms=1.5, linestyle = '--')
+           label = f'{model_name} val', ms=1.5, linestyle = '--', linewidth=linewidth)
         plt.ylim([0,3000000])
         plt.xlim([0,xlim])
         i+=1
     plt.legend(fontsize=24, markerscale=10)
+    plt.grid()
     plt.show()
+#%%
+best_one_l_model_gasses_only['name'] += ' gases_only'
+best_two_l_model_gasses_only['name'] += ' gases_only'
+best_one_l_model_gasses_and_stitch_small['name'] += ' stitch_small'
+best_two_l_model_gasses_and_stitch_small['name'] += ' stitch_small'
+best_one_l_model_gasses_and_stitch_big['name'] += ' stitch_big'
+best_two_l_model_gasses_and_stitch_big['name'] += ' stitch_big'
+best_one_l_model_gasses_and_temp['name'] += ' gases_and_temp'
+best_two_l_model_gasses_and_temp['name'] += ' gases_and_temp'
+best_one_l_model_gasses_and_temp_gas['name'] += ' temp_gas'
+best_two_l_model_gasses_and_temp_gas['name'] += ' temp_gas'
+
+models = [best_one_l_model_gasses_only, best_two_l_model_gasses_only, best_one_l_model_gasses_and_stitch_small,
+          best_two_l_model_gasses_and_stitch_small, best_one_l_model_gasses_and_stitch_big, best_two_l_model_gasses_and_stitch_big,
+          best_one_l_model_gasses_and_temp, best_two_l_model_gasses_and_temp,best_one_l_model_gasses_and_temp_gas,best_two_l_model_gasses_and_temp_gas]
+
+
+scaler_gasses_only = nn_pipeline(df_gasses_only)
+
+scaler_gasses_and_stitch_small = nn_pipeline(df_gasses_and_stitch_small)
+scaler_gasses_and_stitch_big = nn_pipeline(df_gasses_and_stitch_big)
+
+scaler_gasses_and_temp = nn_pipeline(df_gases_and_temp)
+scaler_gasses_and_temp_gas = nn_pipeline(df_gases_and_temp_gas)
+
+scalers = [scaler_gasses_only, scaler_gasses_and_stitch_small, scaler_gasses_and_stitch_big,
+           scaler_gasses_and_temp, scaler_gasses_and_temp_gas]
+#%%
+"""
+Plot graphics and doing comparing on tests
+"""
+plot_history(models, 1200)
+
+#test on gases
+print("test on gases")
+j=0
+rmse_on_gases = []
+for i in range(len(scalers)):
+    rmse = test_model(df_gasses_test, models[j], scalers[i])
+    rmse_on_gases.append((rmse,models[j]['name']))
+    print('\n')
+    rmse = test_model(df_gasses_test, models[j+1], scalers[i])
+    rmse_on_gases.append((rmse,models[j+1]['name']))
+    print('\n')
+    j+=2
+
+#test on temperature
+print("test on temperature")
+j=0
+rmse_on_temp = []
+for i in range(len(scalers)):
+    rmse = test_model(df_gas_and_temp_with_C_test, models[j], scalers[i])
+    rmse_on_temp.append((rmse,models[j]['name']))
+    print('\n')
+    rmse = test_model(df_gas_and_temp_with_C_test, models[j+1], scalers[i])
+    rmse_on_temp.append((rmse,models[j+1]['name']))
+    print('\n')
+    j+=2
+#%%
+rmse_on_gases.sort(key=lambda x: x[0])
+print("rmse on gas") 
+print(rmse_on_gases)
+rmse_on_temp.sort(key=lambda x: x[0])
+print("rmse on temp")
+print(rmse_on_temp)
+
+#%%
+models_for_graph = [best_two_l_model_gasses_and_stitch_big, best_one_l_model_gasses_and_stitch_big,
+               best_two_l_model_gasses_and_stitch_small, best_one_l_model_gasses_and_temp,best_two_l_model_gasses_and_temp_gas]
+
+plot_history(models_for_graph, 800,3)
+#%%
+plot_history([best_two_l_model_gasses_and_stitch_big], 800,3)
 #%%
