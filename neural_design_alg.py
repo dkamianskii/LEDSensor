@@ -114,7 +114,7 @@ def test_model(df_test, model, scaler):
         temp_predict = model['model'].predict(temp_features,verbose=0)
         temp_rmse = np.sqrt(mean_squared_error(temp_predict, C_target))
         rmse_on_perc.append(temp_rmse)
-        print(f"{target*1e-4:.5}%:  root mean squared error original C {np.sqrt(mean_squared_error(C_original, C_target)):.5} and  evaluated {temp_rmse:.4} ")
+        print(f"{target*1e-4:.5}%:  root mean squared error original C {np.sqrt(mean_squared_error(C_original, C_target)):.5} and  evaluated {temp_rmse:.5} ")
     
     mean_rmse = np.array(rmse_on_perc).mean()
     return mean_rmse
@@ -264,7 +264,7 @@ scalers = [scaler_gasses_only, scaler_gasses_and_stitch_small, scaler_gasses_and
 """
 Plot graphics and doing comparing on tests
 """
-plot_history(models, 1200)
+plot_history(models, 1200, 3)
 
 #test on gases
 print("test on gases")
@@ -303,7 +303,31 @@ print(rmse_on_temp)
 models_for_graph = [best_two_l_model_gasses_and_stitch_big, best_one_l_model_gasses_and_stitch_big,
                best_two_l_model_gasses_and_stitch_small, best_one_l_model_gasses_and_temp,best_two_l_model_gasses_and_temp_gas]
 
-plot_history(models_for_graph, 800,3)
+plot_history(models_for_graph, 450,3)
 #%%
-plot_history([best_two_l_model_gasses_and_stitch_big], 800,3)
+plot_history([best_two_l_model_gasses_and_stitch_big], 450,3)
 #%%
+models_one_layer = [best_one_l_model_gasses_only, best_one_l_model_gasses_and_stitch_small,
+          best_one_l_model_gasses_and_stitch_big,
+          best_one_l_model_gasses_and_temp, best_one_l_model_gasses_and_temp_gas]
+models_two_layers = [best_two_l_model_gasses_only,
+          best_two_l_model_gasses_and_stitch_small, best_two_l_model_gasses_and_stitch_big,
+           best_two_l_model_gasses_and_temp,best_two_l_model_gasses_and_temp_gas]
+
+plot_history(models_one_layer, 1200, 3)
+
+plot_history(models_two_layers, 1200, 3)
+
+#%%
+
+for model in models:
+    model['model'].save(f"{model['name']}")
+    temp_df = pd.DataFrame.from_dict(model['history'].history)
+    temp_df.to_csv(f"{model['name']}.csv")
+#%%
+import pickle
+
+ff = 0
+for scaler in scalers:
+    pickle.dump(scaler, open(f'scaler_{ff}.pkl','wb'))
+    ff+=1
